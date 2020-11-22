@@ -1,3 +1,5 @@
-# GAME2014-F2020-Lesson9
+# GAME2014 - Assignment 2
 
-Demo Project for GAME2014 - Lesson 9
+GAME2014 - Assignment 2
+Shun min Hsieh
+101212629
