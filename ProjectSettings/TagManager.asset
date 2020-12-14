@@ -7,6 +7,8 @@ TagManager:
   - DeathPlane
   - Platforms
   - Walls
+  - Enemy
+  - Fruits
   layers:
   - Default
   - TransparentFX
@@ -18,7 +20,7 @@ TagManager:
   - 
   - Platforms
   - Walls
-  - 
+  - DeathPlane
   - 
   - 
   - 

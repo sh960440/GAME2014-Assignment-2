@@ -14,11 +14,20 @@ public class EnemyController : MonoBehaviour
 
     public bool isGroundAhead;
 
+    public PlayerController player;
+
+    public Animator animator;
+    public SpriteRenderer spriteRenderer;
+
 
     // Start is called before the first frame update
     void Start()
     {
         rigidbody2D = GetComponent<Rigidbody2D>();
+        player = GameObject.FindObjectOfType<PlayerController>();
+        
+        animator = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
