@@ -38,8 +38,8 @@ public class PlayerController : MonoBehaviour
 
     void _Move()
     {
-        //if (isGrounded)
-        //{
+        if (isGrounded)
+        {
             if (!isJumping)
             {
                 if (joystick.Horizontal > joystickHorizontalSensitivity)
@@ -50,7 +50,7 @@ public class PlayerController : MonoBehaviour
 
                     //CreateDustTrail();
 
-                    //m_animator.SetInteger("AnimState", (int)PlayerAnimationType.RUN);
+                    m_animator.SetInteger("AnimState", (int)PlayerAnimationType.RUN);
                 }
                 else if (joystick.Horizontal < -joystickHorizontalSensitivity)
                 {
@@ -60,11 +60,11 @@ public class PlayerController : MonoBehaviour
 
                     //CreateDustTrail();
 
-                    //m_animator.SetInteger("AnimState", (int)PlayerAnimationType.RUN);
+                    m_animator.SetInteger("AnimState", (int)PlayerAnimationType.RUN);
                 }
                 else
                 {
-                    //m_animator.SetInteger("AnimState", (int)PlayerAnimationType.IDLE);
+                    m_animator.SetInteger("AnimState", (int)PlayerAnimationType.IDLE);
                 }
             }
 
@@ -72,7 +72,7 @@ public class PlayerController : MonoBehaviour
             {
                 // jump
                 m_rigidBody2D.AddForce(Vector2.up * verticalForce);
-                //m_animator.SetInteger("AnimState", (int) PlayerAnimationType.JUMP);
+                m_animator.SetInteger("AnimState", (int) PlayerAnimationType.JUMP);
                 isJumping = true;
 
                 //sounds[(int) ImpulseSounds.JUMP].Play();
@@ -83,7 +83,27 @@ public class PlayerController : MonoBehaviour
             {
                 isJumping = false;
             }   
-        //}
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        // respawn
+        if (other.gameObject.CompareTag("DeathPlane"))
+        {
+            //LoseLife();
+            transform.position = spawnPoint.position;
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        isGrounded = true; //
+    }
+
+    private void OnCollisionExit2D(Collision2D other)
+    {
+        isGrounded = false; //
     }
 
 }
