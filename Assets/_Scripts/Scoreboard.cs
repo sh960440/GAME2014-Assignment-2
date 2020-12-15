@@ -18,4 +18,5 @@ using UnityEngine;
 public static class Scoreboard
 {
     public static int score = 0;
+    public static int remainingFruits = 16;
 }

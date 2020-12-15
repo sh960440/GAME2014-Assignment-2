@@ -9,6 +9,8 @@ TagManager:
   - Walls
   - Enemy
   - Fruits
+  - Bullet
+  - LOS
   layers:
   - Default
   - TransparentFX
@@ -21,7 +23,7 @@ TagManager:
   - Platforms
   - Walls
   - DeathPlane
-  - 
+  - Player
   - 
   - 
   - 

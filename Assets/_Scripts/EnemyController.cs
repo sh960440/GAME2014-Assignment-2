@@ -5,6 +5,8 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
     [Header("Movement")]
+    float currentForce;
+    public float walkForce;
     public float runForce;
     public Rigidbody2D rigidbody2D;
     public Transform lookInFrontPoint;
@@ -14,7 +16,10 @@ public class EnemyController : MonoBehaviour
 
     public bool isGroundAhead;
 
+    public LOS enemyLOS;
+
     public PlayerController player;
+    public bool isPlayerInFront;    
 
     public Animator animator;
     public SpriteRenderer spriteRenderer;
@@ -33,9 +38,32 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (_hasLOS())
+        {
+            animator.SetBool("IsRunning", true);
+        }
+        else
+        {
+            animator.SetBool("IsRunning", false );
+        }
+
         _LookInFront();
         _LookAhead();
         _Move();
+    }
+
+    private bool _hasLOS()
+    {
+        if (enemyLOS.colliders.Count > 0)
+        {
+            if (enemyLOS.collidesWith.gameObject.name == "Player" || enemyLOS.colliders[0].gameObject.name == "Player")
+            {
+                currentForce = runForce;
+                return true;
+            }
+        }
+        currentForce = walkForce;
+        return false;
     }
 
     private void _LookInFront()
@@ -74,7 +102,7 @@ public class EnemyController : MonoBehaviour
     {
         if (isGroundAhead)
         {
-            rigidbody2D.AddForce(Vector2.left * runForce * Time.deltaTime * transform.localScale.x);  
+            rigidbody2D.AddForce(Vector2.left * currentForce * Time.deltaTime * transform.localScale.x);  
 
             rigidbody2D.velocity *= 0.90f;
         }
@@ -83,5 +111,15 @@ public class EnemyController : MonoBehaviour
             transform.localScale = new Vector3(transform.localScale.x * -1.0f, transform.localScale.y, transform.localScale.z);
         }
        
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Bullet"))
+        {
+            Scoreboard.score += 100;
+            Destroy(transform.root.gameObject);
+            
+        }
     }
 }

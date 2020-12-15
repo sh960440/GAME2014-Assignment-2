@@ -28,8 +28,8 @@ using UnityEngine;
 [System.Serializable]
 public class BulletController : MonoBehaviour
 {
-    public float verticalSpeed;
-    public float verticalBoundary;
+    public float speed;
+    public float horizontalBoundary;
     public BulletManager bulletManager;
 
     // Start is called before the first frame update
@@ -47,18 +47,20 @@ public class BulletController : MonoBehaviour
 
     private void _Move()
     {
-        transform.position += new Vector3(0.0f, verticalSpeed, 0.0f);
+        transform.position += new Vector3(speed, 0.0f, 0.0f);
     }
 
     public void OnTriggerEnter2D(Collider2D other)
     {
-        // When the bullet hits a mask or an enemy
-        bulletManager.ReturnBullet(gameObject);
+        if (!other.gameObject.CompareTag("LOS"))
+        {
+            bulletManager.ReturnBullet(gameObject);
+        }
     }
 
     private void _CheckBounds()
     {
-        if (transform.position.y > verticalBoundary)
+        if (transform.position.x > horizontalBoundary || transform.position.x < -horizontalBoundary)
         {
             bulletManager.ReturnBullet(gameObject);
         }

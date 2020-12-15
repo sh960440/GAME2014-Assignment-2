@@ -49,11 +49,12 @@ public class BulletManager : MonoBehaviour
         }
     }
 
-    public GameObject GetBullet(Vector3 position)
+    public GameObject GetBullet(Vector3 position, int direction)
     {
         var newBullet = m_bulletPool.Dequeue();
         newBullet.SetActive(true);
         newBullet.transform.position = position;
+        newBullet.GetComponent<BulletController>().speed *= direction;
         return newBullet;
     }
 

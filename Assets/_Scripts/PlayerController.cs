@@ -34,7 +34,6 @@ public class PlayerController : MonoBehaviour
 
     public int lives;
     public Text scoreText;
-    //public Animator livesHUD;
 
     //public AudioSource[] sounds;
 
@@ -48,10 +47,12 @@ public class PlayerController : MonoBehaviour
     private Animator m_animator;
     private RaycastHit2D groundHit;
     private float firingDelay = 0;
+    private bool facingRight = true;
 
     void Start()
     {
         Scoreboard.score = 0;
+        Scoreboard.remainingFruits = 16;
         lives = 5;
 
         m_rigidBody2D = GetComponent<Rigidbody2D>();
@@ -90,6 +91,7 @@ public class PlayerController : MonoBehaviour
                     // move right
                     m_rigidBody2D.AddForce(Vector2.right * horizontalForce * Time.deltaTime);
                     transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+                    facingRight = true;
 
                     m_animator.SetInteger("AnimState", (int)PlayerAnimationType.RUN);
                 }
@@ -98,6 +100,7 @@ public class PlayerController : MonoBehaviour
                     // move left
                     m_rigidBody2D.AddForce(Vector2.left * horizontalForce * Time.deltaTime);
                     transform.localScale = new Vector3(-1.0f, 1.0f, 1.0f);
+                    facingRight = false;
 
                     m_animator.SetInteger("AnimState", (int)PlayerAnimationType.RUN);
                 }
@@ -134,7 +137,12 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.CompareTag("Fruits"))
         {
             other.gameObject.SetActive(false);
-            // score++
+            Scoreboard.score += 100;
+            var remainingFruits = FindObjectsOfType<FruitBehavior>();
+            if (remainingFruits.Length <= 0)
+            {
+                SceneManager.LoadScene("GameoverScreen");
+            } 
         }
     }
 
@@ -175,8 +183,16 @@ public class PlayerController : MonoBehaviour
     {
         if (firingDelay >= 0.5f)
         {
-            bulletManager.GetBullet(bulletSpawnPoint.position);
-            firingDelay = 0; // Reset the timer
+            if (facingRight)
+            {
+                bulletManager.GetBullet(bulletSpawnPoint.position, 1);
+                firingDelay = 0;
+            }
+            else
+            {
+                bulletManager.GetBullet(bulletSpawnPoint.position, -1);
+                firingDelay = 0;
+            }
             //GetComponent<AudioSource>().clip = soundclips[0];
             //GetComponent<AudioSource>().Play();
         }
