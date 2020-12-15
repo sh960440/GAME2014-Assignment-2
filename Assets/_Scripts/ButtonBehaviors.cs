@@ -26,23 +26,28 @@ using UnityEngine.SceneManagement;
 
 public class ButtonBehaviors : MonoBehaviour
 {
+    public AudioSource buttonSound;
     public void OnPlayButtonPressed() // For buttons pointing to the play scene.
     {
+        buttonSound.Play();
         SceneManager.LoadScene("GameScreen");
     }
 
     public void OnInstructionsButtonPressed() // For buttons pointing to the instructions scene.
     {
+        buttonSound.Play();
         SceneManager.LoadScene("InstructionsScreen");
     }
 
     public void OnMenuButtonPressed() // For buttons pointing to the main menu.
     {
+        buttonSound.Play();
         SceneManager.LoadScene("MenuScreen");
     }
 
     public void OnGameoverButtonPressed() // For testing purpose only
     {
+        buttonSound.Play();
         SceneManager.LoadScene("GameoverScreen");
     }
 }

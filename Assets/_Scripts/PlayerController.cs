@@ -9,11 +9,8 @@ using Random = UnityEngine.Random;
 public enum ImpulseSounds
 {
     JUMP,
-    HIT1,
-    HIT2,
-    HIT3,
     DIE,
-    THROW,
+    SHOOT,
     FRUIT
 }
 
@@ -35,9 +32,10 @@ public class PlayerController : MonoBehaviour
     public int lives;
     public Text scoreText;
 
-    //public AudioSource[] sounds;
+    public AudioSource audioSource;
+    public AudioClip[] soundEffects;
 
-    //public Transform parent;
+    public Transform parent;
 
     public BulletManager bulletManager;
     public Transform bulletSpawnPoint;
@@ -60,6 +58,7 @@ public class PlayerController : MonoBehaviour
         m_animator = GetComponent<Animator>();
 
         //sounds = GetComponents<AudioSource>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     void FixedUpdate()
@@ -88,7 +87,6 @@ public class PlayerController : MonoBehaviour
             {
                 if (joystick.Horizontal > joystickHorizontalSensitivity)
                 {
-                    // move right
                     m_rigidBody2D.AddForce(Vector2.right * horizontalForce * Time.deltaTime);
                     transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
                     facingRight = true;
@@ -97,7 +95,6 @@ public class PlayerController : MonoBehaviour
                 }
                 else if (joystick.Horizontal < -joystickHorizontalSensitivity)
                 {
-                    // move left
                     m_rigidBody2D.AddForce(Vector2.left * horizontalForce * Time.deltaTime);
                     transform.localScale = new Vector3(-1.0f, 1.0f, 1.0f);
                     facingRight = false;
@@ -112,12 +109,12 @@ public class PlayerController : MonoBehaviour
 
             if ((joystick.Vertical > joystickVerticalSensitivity) && (!isJumping))
             {
-                // jump
                 m_rigidBody2D.AddForce(Vector2.up * verticalForce);
                 m_animator.SetInteger("AnimState", (int) PlayerAnimationType.JUMP);
                 isJumping = true;
 
-                //sounds[(int) ImpulseSounds.JUMP].Play();
+                audioSource.clip = soundEffects[(int)ImpulseSounds.JUMP];
+                audioSource.Play();
             }
             else
             {
@@ -138,6 +135,8 @@ public class PlayerController : MonoBehaviour
         {
             other.gameObject.SetActive(false);
             Scoreboard.score += 100;
+            audioSource.clip = soundEffects[(int)ImpulseSounds.FRUIT];
+            audioSource.Play();
             var remainingFruits = FindObjectsOfType<FruitBehavior>();
             if (remainingFruits.Length <= 0)
             {
@@ -152,20 +151,30 @@ public class PlayerController : MonoBehaviour
         {
             LoseLife();
         }
+
+        if (other.gameObject.CompareTag("Moving Platform"))
+        {
+            other.gameObject.GetComponent<MovingPlatformBehavior>().isActive = true;
+            transform.SetParent(other.gameObject.transform);
+        }
     }
 
     private void OnCollisionExit2D(Collision2D other)
     {
-        
+        if (other.gameObject.CompareTag("Moving Platform"))
+        {
+            other.gameObject.GetComponent<MovingPlatformBehavior>().isActive = false;
+            transform.SetParent(parent);
+        }
     }
 
     public void LoseLife()
     {
         lives -= 1;
 
-        //sounds[(int) ImpulseSounds.DIE].Play();
+        audioSource.clip = soundEffects[(int)ImpulseSounds.DIE];
+        audioSource.Play();
         
-        //livesHUD.SetInteger("LivesState", lives);
 
         if (lives > 0)
         {
@@ -181,7 +190,7 @@ public class PlayerController : MonoBehaviour
 
     public void Fire()
     {
-        if (firingDelay >= 0.5f)
+        if (firingDelay >= 1.0f)
         {
             if (facingRight)
             {
@@ -193,8 +202,8 @@ public class PlayerController : MonoBehaviour
                 bulletManager.GetBullet(bulletSpawnPoint.position, -1);
                 firingDelay = 0;
             }
-            //GetComponent<AudioSource>().clip = soundclips[0];
-            //GetComponent<AudioSource>().Play();
+            audioSource.clip = soundEffects[(int)ImpulseSounds.SHOOT];
+            audioSource.Play();
         }
     }
 }

@@ -23,6 +23,7 @@ public class EnemyController : MonoBehaviour
 
     public Animator animator;
     public SpriteRenderer spriteRenderer;
+    public AudioSource soundEffect;
 
 
     // Start is called before the first frame update
@@ -117,9 +118,19 @@ public class EnemyController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Bullet"))
         {
-            Scoreboard.score += 100;
-            Destroy(transform.root.gameObject);
-            
+            soundEffect.Play();
+            StartCoroutine(BeingKilled());
         }
+    }
+
+    private void Die()
+    {
+        Scoreboard.score += 100;
+        Destroy(transform.root.gameObject);
+    }
+
+    IEnumerator BeingKilled() {
+        yield return new WaitForSeconds(0.1f);
+        Die();        
     }
 }
