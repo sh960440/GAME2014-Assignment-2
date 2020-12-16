@@ -2,10 +2,10 @@
 File name: BulletController.cs
 Author: Shun min Hsieh
 Student Number: 101212629
-Date last Modified: 2020/10/23
+Date last Modified: 2020/10/13
 Program description: A class for the bullet's movement and bound checking.
 Revision History:
-2020/10/23
+2020/12/13
  - Added Start function
  - Added Update function
  - Added _Move function

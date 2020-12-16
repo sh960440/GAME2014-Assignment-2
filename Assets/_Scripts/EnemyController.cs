@@ -1,4 +1,33 @@
-﻿using System.Collections;
+﻿/*******************
+File name: EnemyController.cs
+Author: Shun min Hsieh
+Student Number: 101212629
+Date last Modified: 2020/12/13
+Program description: A class controls the enemy's movement and AI behavior.
+Revision History:
+2020/12/13
+ - Added Start function
+ - Added FixedUpdate function
+ - Added _hasLOS function
+ - Added _LookInFront function
+ - Added _LookAhead function
+ - Added _Move function
+ - Added OnTriggerEnter2D function
+ - Added Die function
+
+Class:
+    EnemyController
+Functions:
+    Start
+    FixedUpdate
+    _hasLOS
+    _LookInFront
+    _LookAhead
+    _Move
+    OnTriggerEnter2D
+    Die
+*******************/
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 

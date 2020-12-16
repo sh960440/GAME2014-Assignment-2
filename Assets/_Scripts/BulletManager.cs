@@ -2,10 +2,10 @@
 File name: BulletManager.cs
 Author: Shun min Hsieh
 Student Number: 101212629
-Date last Modified: 2020/10/23
+Date last Modified: 2020/12/13
 Program description: A class controls the creation and use of the bullet pool.
 Revision History:
-2020/10/23
+2020/12/13
  - Added Start function
  - Added _BuildBulletPool function
  - Added GetBullet function

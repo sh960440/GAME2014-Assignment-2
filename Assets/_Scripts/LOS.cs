@@ -1,4 +1,23 @@
-﻿using System.Collections;
+﻿/*******************
+File name: LOS.cs
+Author: Shun min Hsieh
+Student Number: 101212629
+Date last Modified: 2020/12/13
+Program description: A class deals with the enemy's line of sight.
+Revision History:
+2020/12/13
+ - Added Start function
+ - Added FixedUpdate function
+ - Added OnTriggerEnter2D function
+
+Class:
+    LOS
+Functions:
+    Start
+    FixedUpdate
+    OnTriggerEnter2D
+*******************/
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 

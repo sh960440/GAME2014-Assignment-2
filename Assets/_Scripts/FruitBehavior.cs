@@ -1,4 +1,23 @@
-﻿using System.Collections;
+﻿/*******************
+File name: FruitBehavoir.cs
+Author: Shun min Hsieh
+Student Number: 101212629
+Date last Modified: 2020/12/13
+Program description: A class controls the behavoir of the pickup item.
+Revision History:
+2020/12/13
+ - Added Start function
+ - Added Update function
+ - Added _toggle function
+
+Class:
+    FruitBehavior
+Functions:
+    Start
+    Update
+    _toggle
+*******************/
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -28,11 +47,7 @@ public class FruitBehavior : MonoBehaviour
                 isGrounded = true;
                 rigidbody2D.gravityScale = 0;
             }
-            
-            
         }
-        
-
         _toggle();
     }
 
@@ -40,8 +55,7 @@ public class FruitBehavior : MonoBehaviour
     {
         if (isGrounded)
         {
-            transform.position = new Vector3(transform.position.x,
-                groundLevel.y + Mathf.PingPong(Time.time, 1), 0.0f);
+            transform.position = new Vector3(transform.position.x, groundLevel.y + Mathf.PingPong(Time.time, 1), 0.0f);
         }
     }
 }

@@ -1,15 +1,15 @@
 ﻿/*******************
-File name: LifeCounter.cs
+File name: PlayerCamera.cs
 Author: Shun min Hsieh
 Student Number: 101212629
 Date last Modified: 2020/12/13
-Program description: A class sets lives icons in the Play scene.
+Program description: A class locks the z position of the main camera.
 Revision History:
 2020/12/13
  - Added Update function
 
 Class:
-    LifeCounter
+    PlayerCamera
 Functions:
     Update
 *******************/
@@ -17,16 +17,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LifeCounter : MonoBehaviour
+public class PlayerCamera : MonoBehaviour
 {
-    public int indexNum;    
-    public PlayerController player;
-
+    // Update is called once per frame
     void Update()
     {
-        if (player.lives < indexNum)
-        {
-            Destroy(gameObject);
-        }
+        transform.position = new Vector3(transform.position.x, transform.position.y, -10);
     }
 }

@@ -1,4 +1,35 @@
-﻿using System.Collections;
+﻿/*******************
+File name: PlayerController.cs
+Author: Shun min Hsieh
+Student Number: 101212629
+Date last Modified: 2020/12/13
+Program description: A class controls the player's operations and related game logic.
+Revision History:
+2020/12/13
+ - Added Start function
+ - Added FixedUpdate function
+ - Added _IsGroundBelow function
+ - Added _Move function
+ - Added OnTriggerEnter2D function
+ - Added OnCollisionEnter2D function
+ - Added OnCollisionExit2D function
+ - Added LoseLife function
+ - Added Fire function
+
+Class:
+    PlayerController
+Functions:
+    Start
+    FixedUpdate
+    _IsGroundBelow
+    _Move
+    OnTriggerEnter2D
+    OnCollisionEnter2D
+    OnCollisionExit2D
+    LoseLife
+    Fire
+*******************/
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -50,14 +81,12 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         Scoreboard.score = 0;
-        Scoreboard.remainingFruits = 16;
         lives = 5;
 
         m_rigidBody2D = GetComponent<Rigidbody2D>();
         m_spriteRenderer = GetComponent<SpriteRenderer>();
         m_animator = GetComponent<Animator>();
 
-        //sounds = GetComponents<AudioSource>();
         audioSource = GetComponent<AudioSource>();
     }
 
@@ -152,19 +181,29 @@ public class PlayerController : MonoBehaviour
             LoseLife();
         }
 
-        if (other.gameObject.CompareTag("Moving Platform"))
+        if (other.gameObject.CompareTag("MovingPlatform"))
         {
             other.gameObject.GetComponent<MovingPlatformBehavior>().isActive = true;
             transform.SetParent(other.gameObject.transform);
+        }
+
+        if (other.gameObject.CompareTag("FallingPlatform"))
+        {
+            
         }
     }
 
     private void OnCollisionExit2D(Collision2D other)
     {
-        if (other.gameObject.CompareTag("Moving Platform"))
+        if (other.gameObject.CompareTag("MovingPlatform"))
         {
             other.gameObject.GetComponent<MovingPlatformBehavior>().isActive = false;
             transform.SetParent(parent);
+        }
+
+        if (other.gameObject.CompareTag("FallingPlatform"))
+        {
+            
         }
     }
 

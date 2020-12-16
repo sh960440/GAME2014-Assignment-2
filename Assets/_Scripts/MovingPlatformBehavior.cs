@@ -1,4 +1,25 @@
-﻿using System.Collections;
+﻿/*******************
+File name: MovingPlatformBehavior.cs
+Author: Shun min Hsieh
+Student Number: 101212629
+Date last Modified: 2020/12/13
+Program description: A class controls the moving platform.
+Revision History:
+2020/12/13
+ - Added Start function
+ - Added Update function
+ - Added _Move function
+ - Added Reset function
+
+Class:
+    MovingPlatformBehavior
+Functions:
+    Start
+    Update
+    _Move
+    Reset
+*******************/
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
